@@ -18,6 +18,7 @@ const ProductList: React.FC = () => {
   }, [dispatch]);
 
   const products = useAppSelector((state) => state.product.products);
+  const searchResults = useAppSelector((state) => state.product.searchResults);
 
   const productsPerPage = 12;
   const totalProducts = Object.values(products).length;
@@ -26,8 +27,10 @@ const ProductList: React.FC = () => {
   const startIndex = (currentPage - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
 
-  const displayedProducts = Object.values(products).slice(startIndex, endIndex);
-
+  const displayedProducts =
+    searchResults.length > 0
+      ? searchResults
+      : Object.values(products).slice(startIndex, endIndex);
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
     page: number

@@ -1,6 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios, { AxiosError } from "axios";
-import { Product } from "../features/product/productTypes"; //changed
+import axios from "axios";
+import { Product } from "../features/product/productTypes"; 
 
 export async function getProducts(): Promise<Product[]> {
   try {

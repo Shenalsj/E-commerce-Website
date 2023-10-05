@@ -10,13 +10,13 @@ import { RootState } from "../../app/store";
 type CheckoutState = "LOADING" | "READY" | "ERROR";
 export interface CartState {
   items: { [id: string]: number };
-  CheckoutState: CheckoutState;
+  checkoutState: CheckoutState;
   errorMessage: string;
 }
 
 const initialState: CartState = {
   items: {},
-  CheckoutState: "READY",
+  checkoutState: "READY",
   errorMessage: "",
 };
 
@@ -29,6 +29,7 @@ export const checkoutCart = createAsyncThunk(
     return response;
   }
 );
+//used createAsyncThunk to generate a action creator which I named checkoutCart dispatched action based on checkout api call those reactions are pending, fulfilled and rejected are cases in the extra reduces function rather than building thunk functions by hand createAsyncThunk generates dispatched appropriate actions.
 
 const cartSlice = createSlice({
   name: "cart",
@@ -55,22 +56,22 @@ const cartSlice = createSlice({
   },
   extraReducers: function (builder) {
     builder.addCase(checkoutCart.pending, (state) => {
-      state.CheckoutState = "LOADING";
+      state.checkoutState = "LOADING";
     });
     builder.addCase(
       checkoutCart.fulfilled,
       (state, action: PayloadAction<{ success: boolean }>) => {
         const { success } = action.payload;
         if (success) {
-          state.CheckoutState = "READY";
+          state.checkoutState = "READY";
           state.items = {};
         } else {
-          state.CheckoutState = "ERROR";
+          state.checkoutState = "ERROR";
         }
       }
     );
     builder.addCase(checkoutCart.rejected, (state, action) => {
-      state.CheckoutState = "ERROR";
+      state.checkoutState = "ERROR";
       state.errorMessage = action.error.message || "";
     });
   },

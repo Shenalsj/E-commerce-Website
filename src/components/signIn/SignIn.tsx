@@ -19,9 +19,9 @@ import {
 } from "@mui/material";
 
 import {
-  fetchRefreshToken,
+  refreshTokenAndStoreTokens,
   getProfile,
-  login,
+  loginAndStoreTokens ,
 } from "../../features/auth/authActions";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { cookies } from "../../utils/cookies";
@@ -46,7 +46,7 @@ const SignIn: React.FC = () => {
 
   useEffect(() => {
     if (refreshToken && !accessToken && !profile) {
-      dispatch(fetchRefreshToken(refreshToken));
+      dispatch(refreshTokenAndStoreTokens(refreshToken));
     }
   }, [dispatch, accessToken, profile, refreshToken]);
 
@@ -62,7 +62,7 @@ const SignIn: React.FC = () => {
     const email = data.get("email") as string | null;
     const password = data.get("password") as string | null;
     if (email && password) {
-      dispatch(login({ email, password }));
+      dispatch(loginAndStoreTokens ({ email, password }));
     }
   };
 

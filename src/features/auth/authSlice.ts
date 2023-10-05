@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { removeCookies } from "../../utils/cookies";
-import { fetchRefreshToken, getProfile, login } from "./authActions";
+import { refreshTokenAndStoreTokens, getProfile, loginAndStoreTokens  } from "./authActions";
 import { User } from "./userTypes";
 
 export interface AuthState {
@@ -30,15 +30,15 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(login.pending, (state) => {
+      .addCase(loginAndStoreTokens.pending, (state) => {
         state.error = null;
         state.isLoading = true;
       })
-      .addCase(login.fulfilled, (state, action) => {
+      .addCase(loginAndStoreTokens.fulfilled, (state, action) => {
         state.isLoading = false;
         state.accessToken = action.payload;
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(loginAndStoreTokens.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });
@@ -58,15 +58,15 @@ export const authSlice = createSlice({
       });
 
     builder
-      .addCase(fetchRefreshToken.pending, (state) => {
+      .addCase(refreshTokenAndStoreTokens.pending, (state) => {
         state.error = null;
         state.isLoading = true;
       })
-      .addCase(fetchRefreshToken.fulfilled, (state, action) => {
+      .addCase(refreshTokenAndStoreTokens.fulfilled, (state, action) => {
         state.isLoading = false;
         state.accessToken = action.payload;
       })
-      .addCase(fetchRefreshToken.rejected, (state, action) => {
+      .addCase(refreshTokenAndStoreTokens.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });

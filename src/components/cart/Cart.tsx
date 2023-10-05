@@ -15,7 +15,7 @@ export function Cart() {
   const products = useAppSelector((state) => state.product.products);
   const items = useAppSelector((state) => state.cart.items);
   const totalPrice = useAppSelector(getTotalPrice);
-  const checkoutState = useAppSelector((state) => state.cart.CheckoutState);
+  const checkoutState = useAppSelector((state) => state.cart.checkoutState); //state.cart is of type CartState not a string
   const errorMessage = useAppSelector((state) => state.cart.errorMessage);
 
   function onQuantityChanged(

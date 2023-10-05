@@ -15,6 +15,7 @@ export interface Product{
     imageURL: string;
     imageAlt: string;
     imageCredit: string;
-    category:Category
+    categoryId: number; 
+    
 }
 

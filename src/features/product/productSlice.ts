@@ -2,12 +2,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { Product } from "../product/productTypes"; 
 
 
+
+
 export interface ProductsState {
   products: { [id: string]: Product };
+  searchResults: Product[]; 
 }
 
 const initialState: ProductsState = {
   products: {},
+  searchResults: [], 
 };
 
 const productsSlice = createSlice({
@@ -34,8 +38,11 @@ const productsSlice = createSlice({
         return acc;
       }, {} as { [id: string]: Product });
     },
+    setSearchResults(state, action: PayloadAction<Product[]>) {
+      state.searchResults = action.payload;
+    },
   },
 });
 
-export const { receivedProducts } = productsSlice.actions;
+export const { receivedProducts,setSearchResults  } = productsSlice.actions;
 export default productsSlice.reducer;

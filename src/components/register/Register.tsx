@@ -59,6 +59,7 @@ const Register: React.FC = () => {
 
   return (
     <form className="register-form" onSubmit={handleSubmit}>
+      <h2>Register</h2>
       <div>
         <TextField
           label="Email"

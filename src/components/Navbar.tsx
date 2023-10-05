@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
 import { CartLink } from "./cart/CartLink";
-import SearchCom from "./search/SearchCom";
+import SearchInput from "./search/SearchInput"
 
 const pages = ["Home", "Categories", "Login"];
 const settings = ["Account", "Logout"];
@@ -84,7 +84,8 @@ function Navbar() {
             ))}
           </Box>
 
-          <SearchCom />
+         
+          <SearchInput />
 
           {/* Profile Image*/}
           <Box sx={{ flexGrow: 0 }}>

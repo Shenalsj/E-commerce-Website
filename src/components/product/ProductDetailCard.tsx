@@ -18,6 +18,10 @@ interface ProductDetailCardProps {
 
 const ProductDetailCard: React.FC<ProductDetailCardProps> = ({ product }) => {
   const dispatch = useDispatch();
+    const handleAddToCart = (productId: string) => {
+      dispatch(addToCart(productId));
+    };
+
 
   return (
     <>
@@ -46,7 +50,7 @@ const ProductDetailCard: React.FC<ProductDetailCardProps> = ({ product }) => {
               ${product.price}
             </Typography>
             <Button
-              onClick={() => dispatch(addToCart(product.id))}
+              onClick={() => handleAddToCart(product.id)}
               variant="contained"
               color="primary"
             >
