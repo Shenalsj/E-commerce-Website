@@ -27,27 +27,21 @@ This project requires implementation of TypeScript and SASS.
 2. Use pagination when fetching/displaying all the products
 3. Implement performance optimization where applicable
 
+
+
+## Technologies
+
+- Typescript
+- React
+- Redux (Toolkit)
+- React Router
+- Material UI
+- SCSS
+- RTK-Query
+
 ## Instruction to start the project
 
-In the project directory, you can run:
+Clone this repo
+Install project dependencies using `npm install`
+Run the app  `npm start`
 
-### `npm install`
-
-Install all the dependencies
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
