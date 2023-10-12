@@ -1,40 +1,47 @@
-import React from "react";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import img8 from "../../assets/images/img8.jpg";
-import img6 from "../../assets/images/img6.jpg";
-import "./Slider.scss";
+import SimpleImageSlider from "react-simple-image-slider";
+import "../../styles/Slider.scss";
+import image1 from "../../assets/images/img7.jpg"; // Import your images
+import image2 from "../../assets/images/img2.jpg";
+import image3 from "../../assets/images/img5.jpg";
+import image4 from "../../assets/images/img6.jpg";
+import image5 from "../../assets/images/img1.jpg";
 
-import { Carousel } from "react-responsive-carousel";
+interface SliderImage {
+  url: string;
+}
 
+export default function Slider() {
+  const sliderImages: SliderImage[] = [
+    {
+      url: image5,
+    },
+    {
+      url: image1,
+    },
+    {
+      url: image3,
+    },
+    {
+      url: image2,
+    },
+    {
+      url: image4,
+    },
+  ];
 
-
-const App: React.FC = () => {
   return (
-    <div className="carasoul-style">
-      <div className="CarouselContainer">
-        <Carousel
-          showArrows={true}
-          showThumbs={false}
-          autoPlay={true}
-          infiniteLoop={true}
-          interval={3000}
-        >
-          <div className="slide">
-            <img src={img8} alt="Image 1" />
-            <p className="legend">Watches</p>
-          </div>
-          <div className="slide">
-            <img src={img6} alt="Image 2" />
-            <p className="legend">Mobile Phones</p>
-          </div>
-          <div className="slide">
-            <img src={img8} alt="Image 2" />
-            <p className="legend">Watches</p>
-          </div>
-        </Carousel>
-      </div>
+    <div className="slider-container">
+      <SimpleImageSlider
+        width="98%"
+        height={400}
+        images={sliderImages}
+        showBullets={true}
+        showNavs={true}
+        autoPlay={true}
+        autoPlayDelay={3}
+        
+      />
+  
     </div>
   );
-};
-
-export default App;
+}

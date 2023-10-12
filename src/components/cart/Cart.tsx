@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import {
   getTotalPrice,
@@ -7,7 +8,7 @@ import {
   updateQuantity,
   checkoutCart,
 } from "../../features/cart/cartSlice";
-import "./Cart.scss";
+import "../../styles/Cart.scss";
 
 export function Cart() {
   const dispatch = useAppDispatch();
@@ -16,6 +17,7 @@ export function Cart() {
   const items = useAppSelector((state) => state.cart.items);
   const totalPrice = useAppSelector(getTotalPrice);
   const checkoutState = useAppSelector((state) => state.cart.checkoutState); //state.cart is of type CartState not a string
+
   const errorMessage = useAppSelector((state) => state.cart.errorMessage);
 
   function onQuantityChanged(

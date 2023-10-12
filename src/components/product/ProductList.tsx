@@ -1,19 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { receivedProducts } from "../../features/product/productSlice";
+import {
+  receivedProducts,
+  setSearchResults,
+  sortByPrice,
+} from "../../features/product/productSlice";
 import { getProducts } from "../../app/api";
 import ProductDetailCard from "./ProductDetailCard";
-import "./ProductList.scss";
+import "../../styles/ProductList.scss";
 
-import { Pagination } from "@mui/material";
+import { Pagination, Box, Button, Typography } from "@mui/material";
 
-const ProductList: React.FC = () => {
+interface ProductListProps {
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const ProductList: React.FC<ProductListProps> = ({
+  currentPage,
+  setCurrentPage,
+}) => {
   const dispatch = useAppDispatch();
-  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     getProducts().then((products) => {
       dispatch(receivedProducts(products));
+      dispatch(setSearchResults(products));
     });
   }, [dispatch]);
 
@@ -28,9 +40,11 @@ const ProductList: React.FC = () => {
   const endIndex = startIndex + productsPerPage;
 
   const displayedProducts =
-    searchResults.length > 0
-      ? searchResults
-      : Object.values(products).slice(startIndex, endIndex);
+    // searchResults.length > 0
+    //   ?
+    searchResults.slice(startIndex, endIndex);
+  // : Object.values(products).slice(startIndex, endIndex);
+
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
     page: number
@@ -39,7 +53,27 @@ const ProductList: React.FC = () => {
   };
 
   return (
-    <>
+    <div >
+     <Box m={1}>
+        <Typography fontWeight={"bold"} fontSize={18}>
+          Filter by price
+        </Typography>
+        <Button
+          variant="contained"
+          onClick={() => dispatch(sortByPrice("asc"))}
+          sx={{ mr: 1 }}
+          style={{ backgroundColor: '#002b6b', color: 'white' }} 
+        >
+          sort in asc
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => dispatch(sortByPrice("desc"))}
+          style={{ backgroundColor: '#002b6b', color: 'white' }} 
+        >
+          sort in desc
+        </Button>
+      </Box>
       <div className="product-list">
         {displayedProducts.map((product) => (
           <ProductDetailCard key={product.id} product={product} />
@@ -57,7 +91,7 @@ const ProductList: React.FC = () => {
           className="pagination-cls"
         />
       </div>
-    </>
+    </div>
   );
 };
 

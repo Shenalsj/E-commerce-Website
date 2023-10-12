@@ -1,105 +1,193 @@
-import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import './Register.scss'
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-const Register: React.FC = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
+function Copyright(props: any) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
+// TODO remove, this demo shouldn't need to reset the theme.
+const defaultTheme = createTheme();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const { email, password, confirmPassword } = formData;
+export default function SignUp() {
+  const [loading, setLoading] = React.useState(false);
 
+  const navigate = useNavigate();
 
-    if (password !== confirmPassword) {
-      alert('Passwords do not match');
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const userObj = {
+      name:
+        event.currentTarget.firstName.value +
+        " " +
+        event.currentTarget.lastName.value,
+      email: event.currentTarget.email.value,
+      password: event.currentTarget.password.value,
+      avatar: event.currentTarget.avatar.value,
+    };
+    if (
+      !userObj.email ||
+      !userObj.password ||
+      !userObj.avatar ||
+      !event.currentTarget.firstName.value ||
+      !event.currentTarget.lastName.value
+    ) {
+      toast.error("All fileds are required!");
       return;
     }
 
-    const user = {
-      email,
-      password,
-    };
-
-  
-    try {
-      const response = await fetch('https://api.escuelajs.co/api/v1/users/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
+    setLoading(true);
+    axios
+      .post("https://api.escuelajs.co/api/v1/users/", userObj)
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+        toast.success("Registration Successful!");
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Registration failed. Please try again!");
+      })
+      .finally(() => {
+        setLoading(false);
       });
-
-      if (response.ok) {
-        alert('Registration Successful!');
-      } else {
-        alert('Registration failed. Please try again!');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-
-   
-    setFormData({
-      email: '',
-      password: '',
-      confirmPassword: '',
-    });
   };
 
   return (
-    <form className="register-form" onSubmit={handleSubmit}>
-      <h2>Register</h2>
-      <div>
-        <TextField
-          label="Email"
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          fullWidth
-          required
-        />
-      </div>
-      <div>
-        <TextField
-          label="Password"
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          fullWidth
-          required
-        />
-      </div>
-      <div>
-        <TextField
-          label="Confirm Password"
-          type="password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          fullWidth
-          required
-        />
-      </div>
-      <div>
-        <Button type="submit" variant="contained" color="primary">
-          Register
-        </Button>
-      </div>
-    </form>
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="given-name"
+                  name="firstName"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="family-name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="avatar"
+                  label="Avatar URL"
+                  name="avatar"
+                  autoComplete="avatar"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
+                  label="I want to receive inspiration, marketing promotions and updates via email."
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              disabled={loading}
+            >
+              Sign Up
+            </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="/login" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+        <Copyright sx={{ mt: 5 }} />
+      </Container>
+    </ThemeProvider>
   );
-};
-
-export default Register;
+}

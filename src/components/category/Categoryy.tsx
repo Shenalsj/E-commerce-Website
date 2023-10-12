@@ -1,16 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Select, MenuItem, Button } from "@mui/material";
+
 import { RootState, AppDispatch } from "../../app/store";
 import { fetchCategories } from "../../features/category/categorySlice";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { setSearchResults } from "../../features/product/productSlice";
+import "../../styles/Category.scss";
 import CategoryProducts from "./CategoryProducts";
 
+interface CategoryProps {
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+}
 
-
-const Category = () => {
+const Category: React.FC<CategoryProps> = ({ currentPage, setCurrentPage }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const categories = useSelector((state: RootState) => state.categories.categories);
+  const categories = useSelector(
+    (state: RootState) => state.categories.categories
+  );
   const loading = useSelector((state: RootState) => state.categories.loading);
   const error = useSelector((state: RootState) => state.categories.error);
+
+  const products = useAppSelector((state) => state.product.products);
+  const appDispatch = useAppDispatch();
 
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
@@ -21,36 +34,61 @@ const Category = () => {
 
   const handleCategoryClick = (categoryId: number) => {
     setSelectedCategory(categoryId);
+    console.log(categoryId, "categoryId");
+  };
+
+  useEffect(() => {
+    const productsPerPage = 12;
+    const startIndex = (currentPage - 1) * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
+    if (selectedCategory !== null) {
+      const filteredArr = Object.values(products)
+        .filter((product) => product.category.id === selectedCategory)
+        .slice(startIndex, endIndex);
+      appDispatch(setSearchResults(filteredArr));
+      console.log(filteredArr.length, "filteredArr");
+    }
+  }, [selectedCategory, currentPage, handleCategoryClick]);
+
+  const setAllProducts = () => {
+    setSelectedCategory(null);
+    appDispatch(setSearchResults(Object.values(products)));
   };
 
   return (
     <div>
-      <h2>Categories</h2>
+      <h2 className="category-heading">Select a Category</h2>
       {loading ? (
         <div>Loading...</div>
       ) : error ? (
         <div>Error: {error}</div>
       ) : (
         <div>
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => handleCategoryClick(category.id)}
-              className={category.id === selectedCategory ? "selected" : ""}
+          <div className="button-container">
+            <Select
+              value={selectedCategory || ""}
+              onChange={(e) => setSelectedCategory(e.target.value as number)}
+              className="category-select"
             >
-              {category.name}
-            </button>
-          ))}
+              <MenuItem value="">Select Category</MenuItem>
+              {categories.map((category) => (
+                <MenuItem key={category.id} value={category.id}>
+                  {category.name}
+                </MenuItem>
+              ))}
+            </Select>
+
+            <Button variant="outlined" onClick={setAllProducts}>
+              Show All Products
+            </Button>
+          </div>
           {selectedCategory !== null && (
-            <CategoryProducts categoryId={selectedCategory} /> 
-           
+            <CategoryProducts categoryId={selectedCategory} />
           )}
-    
         </div>
       )}
     </div>
   );
 };
-
 
 export default Category;

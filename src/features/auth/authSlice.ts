@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { removeCookies } from "../../utils/cookies";
 import { refreshTokenAndStoreTokens, getProfile, loginAndStoreTokens  } from "./authActions";
-import { User } from "./userTypes";
+import { User } from "../../types/userTypes";
 
 export interface AuthState {
   accessToken: string | null;

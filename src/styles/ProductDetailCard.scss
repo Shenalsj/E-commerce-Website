@@ -1,0 +1,115 @@
+
+
+// .card-cls {
+//   width: 100%;
+//   max-width: 300px; 
+//   height: 350px; 
+//   display: flex;
+//   flex-direction: column;
+//   border: 1px solid #e0e0e0;
+//   border-radius: 8px;
+//   overflow: hidden;
+//   transition: transform 0.2s ease-in-out;
+//   margin-bottom:1px;
+// }
+
+// .card-cls:hover {
+//   transform: translateY(-5px);
+// }
+
+
+
+// .card-content-cls {
+//   flex-grow: 1;
+//   padding: 16px;
+// }
+
+// .card-title-cls {
+//   font-size: 1.25rem;
+//   font-weight: bold;
+//   margin-bottom: 800px;
+// }
+
+// .card-description-cls {
+//   font-size: 0.875rem;
+//   margin-bottom: 8px;
+// }
+
+// .card-price-cls {
+//   font-size: 1rem;
+//   font-weight: bold;
+//   color: #007bff;
+//   margin-top: auto;
+// }
+
+// .card-button-cls {
+//   margin-top: 8px;
+//   align-self: center;
+// }
+
+// .grid-cls a{
+//   text-decoration: none;
+// }
+
+
+
+.card-cls {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; /* Ensure the card takes up the entire height */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+ ;
+}
+
+.card-media-cls {
+  width: 100%;
+  object-fit: cover;
+  height: 300px; /* Set your desired image height */
+}
+
+.card-content-cls {
+  padding: 16px;
+}
+
+.card-title-cls {
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+}
+
+.card-description-cls {
+  font-size: 1rem;
+  color: #777;
+  margin-bottom: 16px;
+}
+
+.card-price-cls {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.button-container {
+  text-align: center;
+  padding: 30px;
+}
+
+.add-to-cart-btn {
+  width: 100%;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #0056b3;
+}

@@ -8,9 +8,13 @@ import {
   Grid,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+
 import { addToCart } from "../../features/cart/cartSlice";
-import { Product } from "../../features/product/productTypes"; 
-import "./ProductDetailCard.scss";
+import { Product } from "../../types/productTypes";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"; // Import the cart icon
+import "../../styles/ProductDetailCard.scss";
+
 
 interface ProductDetailCardProps {
   product: Product;
@@ -18,22 +22,25 @@ interface ProductDetailCardProps {
 
 const ProductDetailCard: React.FC<ProductDetailCardProps> = ({ product }) => {
   const dispatch = useDispatch();
-    const handleAddToCart = (productId: string) => {
-      dispatch(addToCart(productId));
-    };
-
+  const handleAddToCart = (productId: string) => {
+    dispatch(addToCart(productId));
+  };
 
   return (
+   
     <>
       <Grid container spacing={1} className="grid-cls">
         <Card className="card-cls">
-          <CardMedia
-            component="img"
-            alt={product.imageAlt}
-            height="140"
-            image={product.images}
-            className="card-media-cls"
-          />
+          <Link to={`/products/${product.id}`}>
+            <CardMedia
+              component="img"
+              alt={product.imageAlt}
+              height="140"
+              image={product.images}
+              className="card-media-cls"
+            />
+          </Link>
+
           <CardContent className="card-content-cls">
             <Typography
               gutterBottom
@@ -52,14 +59,17 @@ const ProductDetailCard: React.FC<ProductDetailCardProps> = ({ product }) => {
             <Button
               onClick={() => handleAddToCart(product.id)}
               variant="contained"
-              color="primary"
+              style={{ backgroundColor: '#002b6b', color: 'white' }} 
+              startIcon={<ShoppingCartIcon />} // Add the cart icon to the button
             >
-              Add to Cart 🛒
+              Add to Cart
             </Button>
+            
           </CardContent>
         </Card>
       </Grid>
-    </>
+      </>
+   
   );
 };
 

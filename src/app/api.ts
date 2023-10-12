@@ -1,5 +1,10 @@
 import axios from "axios";
-import { Product } from "../features/product/productTypes"; 
+import {
+  CreateProductRequest,
+  ProductResponse,
+  Product,
+  UpdateProductRequest,
+} from "../types/productTypes"; //changed
 
 export async function getProducts(): Promise<Product[]> {
   try {
@@ -9,6 +14,47 @@ export async function getProducts(): Promise<Product[]> {
     return response.data;
   } catch (error) {
     throw new Error("Failed to fetch products: ");
+  }
+}
+
+export async function postNewProduct(
+  productData: CreateProductRequest
+): Promise<ProductResponse> {
+  try {
+    const { data } = await axios.post<ProductResponse>(
+      "https://api.escuelajs.co/api/v1/products/",
+      productData
+    );
+    return data;
+  } catch (error) {
+    throw new Error("Failed to add new product.");
+  }
+}
+
+export async function updateProduct({
+  id,
+  title,
+  price,
+}: UpdateProductRequest): Promise<ProductResponse> {
+  try {
+    const { data } = await axios.put<ProductResponse>(
+      `https://api.escuelajs.co/api/v1/products/${id}`,
+      { title, price }
+    );
+    return data;
+  } catch (error) {
+    throw new Error("Failed to update the product.");
+  }
+}
+
+export async function deleteProduct(id: number): Promise<boolean> {
+  try {
+    const { data } = await axios.delete<boolean>(
+      `https://api.escuelajs.co/api/v1/products/${id}`
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error("Failed to delete a product.");
   }
 }
 

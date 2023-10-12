@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setSearchResults } from "../../features/product/productSlice";
 import { InputBase, alpha, styled } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { Product } from "../../features/product/productTypes";
+
+import { setSearchResults } from "../../features/product/productSlice";
+import { Product } from "../../types/productTypes";
 
 // Debounce function to delay API calls
 function debounce<T>(fn: (arg: T) => void, delay: number) {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setCookies } from "../../utils/cookies";
-import { User } from "./userTypes";
+import { User } from "../../types/userTypes";
 
 interface LoginCredentials {
   email: string;

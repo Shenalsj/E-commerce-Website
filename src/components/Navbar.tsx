@@ -5,7 +5,6 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -14,12 +13,15 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
 import { CartLink } from "./cart/CartLink";
-import SearchInput from "./search/SearchInput"
+import SearchInput from "./search/SearchInput";
+import { useAppSelector } from "../app/hooks";
 
-const pages = ["Home", "Categories", "Login"];
-const settings = ["Account", "Logout"];
+const pages = ["Home", "contact"];
+// const settings = ["LogOut"];
 
 function Navbar() {
+  const { profile } = useAppSelector((state) => state.auth);
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -45,7 +47,12 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar
+      position="static"
+      sx={{
+        backgroundColor: "#002b6b",
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -53,7 +60,7 @@ function Navbar() {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            href="#"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -66,7 +73,7 @@ function Navbar() {
           >
             LOGO
           </Typography>
-  
+
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
@@ -82,51 +89,74 @@ function Navbar() {
                 </Link>
               </Button>
             ))}
+            {profile && profile.role === "admin" && (
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                <Link
+                  style={{ textDecoration: "none", color: "white" }}
+                  to="/admin"
+                >
+                  Admin
+                </Link>
+              </Button>
+            )}
           </Box>
 
-         
           <SearchInput />
 
-          {/* Profile Image*/}
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+          {profile && profile.id ? (
+            <Box sx={{ flexGrow: 0 }}>
+              {/* Profile Image and Menu */}
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
 
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Link
-                  to="/profile"
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  <Typography textAlign="center">Profile</Typography>
-                </Link>
-              </MenuItem>
-
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Link
+                    to="/profile"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <Typography textAlign="center">Profile</Typography>
+                  </Link>
                 </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+
+                {/* {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))} */}
+              </Menu>
+            </Box>
+          ) : (
+            <Button>
+              <Link
+                to="/login"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Login
+              </Link>
+            </Button>
+          )}
 
           <CartLink />
         </Toolbar>
