@@ -29,6 +29,7 @@ export const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    //  async thunk function loginAndStoreTokens
     builder
       .addCase(loginAndStoreTokens.pending, (state) => {
         state.error = null;

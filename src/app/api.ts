@@ -4,7 +4,7 @@ import {
   ProductResponse,
   Product,
   UpdateProductRequest,
-} from "../types/productTypes"; //changed
+} from "../types/productTypes"; 
 
 export async function getProducts(): Promise<Product[]> {
   try {

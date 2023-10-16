@@ -49,7 +49,6 @@ export const ProductCard: React.FC<ProductDetailCardProps> = ({ product }) => {
             variant="h5"
             component="div"
             className="card-title-cls"
-            // sx={{textDecoration: "none"}}
           >
             {product.title}
           </Typography>

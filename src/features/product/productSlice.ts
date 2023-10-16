@@ -1,39 +1,40 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { CreateProductRequest, Product, ProductResponse, UpdateProductRequest } from "../../types/productTypes";
+import type {
+  CreateProductRequest,
+  Product,
+  ProductResponse,
+  UpdateProductRequest,
+} from "../../types/productTypes";
 import { deleteProduct, postNewProduct, updateProduct } from "../../app/api";
-
 
 export interface ProductsState {
   products: { [id: string]: Product };
   newProduct: CreateProductRequest;
   updProduct: UpdateProductRequest;
   delProduct: boolean;
-    searchResults: Product[]; //neww
-
+  searchResults: Product[];
 }
 
 const initialState: ProductsState = {
   products: {},
-  searchResults: [], //newww
+  searchResults: [],
   newProduct: {
     title: "",
     price: 0,
     description: "",
     categoryId: 0,
     images: [],
-     
   },
   updProduct: {
     id: 0,
     title: "",
-    price: 0
+    price: 0,
   },
-  delProduct: false
+  delProduct: false,
 };
 
-
 export const postNewProductAsync = createAsyncThunk(
-  'products/postNewProduct',
+  "products/postNewProduct",
   async (productData: CreateProductRequest) => {
     const response = await postNewProduct(productData);
     return response;
@@ -41,7 +42,7 @@ export const postNewProductAsync = createAsyncThunk(
 );
 
 export const updateProductAsync = createAsyncThunk(
-  'products/updateProduct',
+  "products/updateProduct",
   async ({ id, title, price }: UpdateProductRequest) => {
     const response = await updateProduct({ id, title, price });
     return response;
@@ -49,13 +50,12 @@ export const updateProductAsync = createAsyncThunk(
 );
 
 export const deleteProductAsync = createAsyncThunk(
-  'products/deleteProduct',
+  "products/deleteProduct",
   async (id: number) => {
     const response = await deleteProduct(id);
     return response;
   }
 );
-
 
 const productsSlice = createSlice({
   name: "products",
@@ -68,46 +68,45 @@ const productsSlice = createSlice({
       });
     },
     sortByPrice: (state, action: PayloadAction<"asc" | "desc">) => {
-      console.log(action.payload)
-      // const sortedProductsArray = Object.values(state.products);
       const sortedProductsArray = state.searchResults;
-      console.log(sortedProductsArray,'before sort')
 
       if (action.payload === "asc") {
         sortedProductsArray.sort((a, b) => a.price - b.price);
-        console.log(sortedProductsArray,'after sort')
       } else {
         sortedProductsArray.sort((a, b) => b.price - a.price);
       }
 
-      state.searchResults = sortedProductsArray
-
-      // state.products = sortedProductsArray.reduce((acc, product) => {
-      //   acc[product.id] = product;
-      //   return acc;
-      // }, {} as { [id: string]: Product });
+      state.searchResults = sortedProductsArray;
     },
-      setSearchResults(state, action: PayloadAction<Product[]>) {
+    setSearchResults(state, action: PayloadAction<Product[]>) {
       state.searchResults = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(postNewProductAsync.fulfilled, (state, action: PayloadAction<ProductResponse>) => {
-        const categoryId = action.payload.category.id
-        const { title, price, description, images } = action.payload
-        state.newProduct = { title, price, description, images, categoryId }
-      })
-      .addCase(updateProductAsync.fulfilled, (state, action: PayloadAction<ProductResponse>) => {
-        state.updProduct = action.payload
-      })
-      .addCase(deleteProductAsync.fulfilled, (state, action: PayloadAction<boolean>) => {
-        state.delProduct = action.payload
-      })
+      .addCase(
+        postNewProductAsync.fulfilled,
+        (state, action: PayloadAction<ProductResponse>) => {
+          const categoryId = action.payload.category.id;
+          const { title, price, description, images } = action.payload;
+          state.newProduct = { title, price, description, images, categoryId };
+        }
+      )
+      .addCase(
+        updateProductAsync.fulfilled,
+        (state, action: PayloadAction<ProductResponse>) => {
+          state.updProduct = action.payload;
+        }
+      )
+      .addCase(
+        deleteProductAsync.fulfilled,
+        (state, action: PayloadAction<boolean>) => {
+          state.delProduct = action.payload;
+        }
+      );
   },
 });
 
-export const { receivedProducts,setSearchResults, sortByPrice } = productsSlice.actions; 
+export const { receivedProducts, setSearchResults, sortByPrice } =
+  productsSlice.actions;
 export default productsSlice.reducer;
-
-

@@ -48,12 +48,10 @@ const UpdateProduct: React.FC = () => {
       price: product.price,
     })
       .then((res) => {
-        console.log(res, "res update product");
         toast.success("Product Updated Successfully");
         navigate("/admin");
       })
       .catch((err) => {
-        console.log(err, "err update product");
         toast.error("Error Updating Product");
       })
       .finally(() => {

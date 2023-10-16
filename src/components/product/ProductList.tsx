@@ -39,11 +39,7 @@ const ProductList: React.FC<ProductListProps> = ({
   const startIndex = (currentPage - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
 
-  const displayedProducts =
-    // searchResults.length > 0
-    //   ?
-    searchResults.slice(startIndex, endIndex);
-  // : Object.values(products).slice(startIndex, endIndex);
+  const displayedProducts = searchResults.slice(startIndex, endIndex);
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
@@ -53,8 +49,8 @@ const ProductList: React.FC<ProductListProps> = ({
   };
 
   return (
-    <div >
-     <Box m={1}>
+    <div>
+      <Box m={1}>
         <Typography fontWeight={"bold"} fontSize={18}>
           Filter by price
         </Typography>
@@ -62,14 +58,14 @@ const ProductList: React.FC<ProductListProps> = ({
           variant="contained"
           onClick={() => dispatch(sortByPrice("asc"))}
           sx={{ mr: 1 }}
-          style={{ backgroundColor: '#002b6b', color: 'white' }} 
+          style={{ backgroundColor: "#002b6b", color: "white" }}
         >
           sort in asc
         </Button>
         <Button
           variant="contained"
           onClick={() => dispatch(sortByPrice("desc"))}
-          style={{ backgroundColor: '#002b6b', color: 'white' }} 
+          style={{ backgroundColor: "#002b6b", color: "white" }}
         >
           sort in desc
         </Button>

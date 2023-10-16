@@ -1,6 +1,6 @@
 import SimpleImageSlider from "react-simple-image-slider";
 import "../../styles/Slider.scss";
-import image1 from "../../assets/images/img7.jpg"; // Import your images
+import image1 from "../../assets/images/img7.jpg";
 import image2 from "../../assets/images/img2.jpg";
 import image3 from "../../assets/images/img5.jpg";
 import image4 from "../../assets/images/img6.jpg";

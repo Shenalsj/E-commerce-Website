@@ -1,18 +1,18 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Link from "@mui/material/Link";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="#ffffff"> 
-      {'Copyright © '}
+    <Typography variant="body2" color="#ffffff">
+      {"Copyright © "}
       <Link color="inherit" href="">
         ShenalSJ
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {' All rights reserved.'}
+      {" All rights reserved."}
     </Typography>
   );
 }
@@ -28,11 +28,11 @@ export default function StickyFooter() {
           py: 1,
           px: 2,
           mt: 3,
-          backgroundColor: '#002b6b',
+          backgroundColor: "#002b6b",
         }}
       >
         <Container maxWidth="sm">
-          <Typography variant="body1" color="white"> 
+          <Typography variant="body1" color="white">
             Frontend Project
           </Typography>
           <Copyright />

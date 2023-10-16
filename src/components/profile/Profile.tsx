@@ -9,7 +9,7 @@ import "../../styles/Profile.scss";
 
 const Profile: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const navigate = useNavigate(); // Use the useNavigate hook
+  const navigate = useNavigate();
   const { profile, isLoading, accessToken } = useSelector(
     (state: RootState) => state.auth
   );
@@ -24,7 +24,6 @@ const Profile: React.FC = () => {
     // Dispatch the logout action to clear user data
     dispatch(logout());
 
-    // Navigate to the home page ("/") after logout
     navigate("/");
   };
 
@@ -38,11 +37,11 @@ const Profile: React.FC = () => {
       {profile ? (
         <div className="user-info">
           <div className="user-data">
-          {profile.avatar && (
+            {profile.avatar && (
               <img
-                src={profile.avatar} 
+                src={profile.avatar}
                 alt="User Avatar"
-                width="100" 
+                width="100"
                 height="100"
                 className="avatar-image"
               />
@@ -50,7 +49,7 @@ const Profile: React.FC = () => {
             <p>Name: {profile.name}</p>
             <p>Email: {profile.email}</p>
             <p>Role: {profile.role}</p>
-           
+
             <button onClick={handleLogout}>Logout</button>
           </div>
         </div>

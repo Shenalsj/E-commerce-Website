@@ -36,18 +36,21 @@ const SignIn: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
+  //display error
   useEffect(() => {
     if (error) {
       setShowError(true);
     }
   }, [error]);
 
+  //refreshing tokens
   useEffect(() => {
     if (refreshToken && !accessToken && !profile) {
       dispatch(refreshTokenAndStoreTokens(refreshToken));
     }
   }, [dispatch, accessToken, profile, refreshToken]);
 
+  //fetching user profile
   useEffect(() => {
     if (accessToken && !profile) {
       dispatch(getProfile(accessToken));

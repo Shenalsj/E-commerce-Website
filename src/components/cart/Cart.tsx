@@ -33,6 +33,7 @@ export function Cart() {
     dispatch(checkoutCart());
   }
 
+  //classname library gives us a single class name string that includes multiple classnames in it
   const tableClasses = classNames({
     table: true,
     checkoutError: checkoutState === "ERROR",

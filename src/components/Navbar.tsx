@@ -17,7 +17,6 @@ import SearchInput from "./search/SearchInput";
 import { useAppSelector } from "../app/hooks";
 
 const pages = ["Home", "contact"];
-// const settings = ["LogOut"];
 
 function Navbar() {
   const { profile } = useAppSelector((state) => state.auth);
@@ -47,12 +46,7 @@ function Navbar() {
   };
 
   return (
-    <AppBar
-      position="static"
-      sx={{
-        backgroundColor: "#002b6b",
-      }}
-    >
+    <AppBar position="static" sx={{ backgroundColor: "#002b6b" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -139,12 +133,6 @@ function Navbar() {
                     <Typography textAlign="center">Profile</Typography>
                   </Link>
                 </MenuItem>
-
-                {/* {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))} */}
               </Menu>
             </Box>
           ) : (
@@ -165,3 +153,5 @@ function Navbar() {
   );
 }
 export default Navbar;
+
+

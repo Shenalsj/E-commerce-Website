@@ -34,7 +34,7 @@ const Category: React.FC<CategoryProps> = ({ currentPage, setCurrentPage }) => {
 
   const handleCategoryClick = (categoryId: number) => {
     setSelectedCategory(categoryId);
-    console.log(categoryId, "categoryId");
+   
   };
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const Category: React.FC<CategoryProps> = ({ currentPage, setCurrentPage }) => {
         .filter((product) => product.category.id === selectedCategory)
         .slice(startIndex, endIndex);
       appDispatch(setSearchResults(filteredArr));
-      console.log(filteredArr.length, "filteredArr");
+    
     }
   }, [selectedCategory, currentPage, handleCategoryClick]);
 

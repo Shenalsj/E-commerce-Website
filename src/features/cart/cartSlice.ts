@@ -4,10 +4,9 @@ import {
   PayloadAction,
   createAsyncThunk,
 } from "@reduxjs/toolkit";
-import { checkout, CartItems } from "../../app/api";
-import { RootState ,AppDispatch} from "../../app/store";
+import { checkout } from "../../app/api";
+import { RootState } from "../../app/store";
 import { toast } from "react-toastify";
-
 
 type CheckoutState = "LOADING" | "READY" | "ERROR";
 export interface CartState {
@@ -57,32 +56,18 @@ const cartSlice = createSlice({
     },
   },
   extraReducers: function (builder) {
-    builder.addCase(checkoutCart.pending, (state,action) => {
+    builder.addCase(checkoutCart.pending, (state, action) => {
       state.checkoutState = "LOADING";
     });
-    // builder.addCase(
-    //   checkoutCart.fulfilled,
-    //   (state, action: PayloadAction<{ success: boolean }>) => {
-    //     const { success } = action.payload;
-    //     if (success) {
-    //       state.checkoutState = "READY";
-    //       state.items = {};
-    //       toast.success('Checkout successful')
-    //     } else {
-    //       state.checkoutState = "ERROR";
-         
-    //     }
-    //   }
-    // );
     builder.addCase(
       checkoutCart.fulfilled,
       (state, action: PayloadAction<{ success: boolean }>) => {
-        const { success } = action.payload; //  success 
-        
+        const { success } = action.payload;
+
         if (success) {
           state.checkoutState = "READY";
           state.items = {};
-          toast.success('Checkout successful');
+          toast.success("Checkout successful");
         } else {
           state.checkoutState = "ERROR";
         }
@@ -91,11 +76,10 @@ const cartSlice = createSlice({
     builder.addCase(checkoutCart.rejected, (state, action) => {
       state.checkoutState = "ERROR";
       // state.errorMessage = action.error.message || "";
-      toast.error('Checkout Error');
+      toast.error("Checkout Error");
     });
   },
 });
-
 
 export const { addToCart, removeFromCart, updateQuantity } = cartSlice.actions;
 export default cartSlice.reducer;
@@ -112,7 +96,6 @@ export function getNumItems(state: RootState) {
 export const getMemoizedNumItems = createSelector(
   (state: RootState) => state.cart.items,
   (items) => {
-   
     let numItems = 0;
     for (let id in items) {
       numItems += items[id];
@@ -132,4 +115,3 @@ export const getTotalPrice = createSelector(
     return total.toFixed(2);
   }
 );
-

@@ -24,7 +24,6 @@ const AddProduct: React.FC = () => {
   const [loading, setLoading] = React.useState(false);
 
   const handleInputChange = (e: any) => {
-    console.log("change", e.target.value);
     setProductData({
       ...productData,
       [e.target.name]: e.target.value,
@@ -51,7 +50,6 @@ const AddProduct: React.FC = () => {
         });
       })
       .catch((err) => {
-        console.log(err);
         toast.error("Error Creating Product");
       })
       .finally(() => {
@@ -93,7 +91,7 @@ const AddProduct: React.FC = () => {
           onChange={handleInputChange}
           name="description"
         />
-    
+
         <FormControl fullWidth>
           <InputLabel id="category">Category</InputLabel>
           <Select

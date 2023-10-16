@@ -6,12 +6,14 @@ import authReducer from "../features/auth/authSlice";
 
 import categoryReducer from "../features/category/categorySlice";
 
+
 export const store = configureStore({
   reducer: {
     cart: cartReducer,
     product: productsReducer,
     auth: authReducer,
     categories: categoryReducer,
+ 
   },
 });
 
